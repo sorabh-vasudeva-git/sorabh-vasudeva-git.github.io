@@ -134,4 +134,17 @@ document.addEventListener('DOMContentLoaded', function () {
       trackEvent('click', 'linkedin_profile');
     });
   }
+
+  var privacyToggle = document.getElementById('privacyToggle');
+  var privacyContent = document.getElementById('privacyContent');
+
+  if (privacyToggle && privacyContent) {
+    privacyToggle.addEventListener('click', function () {
+      if (privacyContent.style.maxHeight) {
+        privacyContent.style.maxHeight = null;
+      } else {
+        privacyContent.style.maxHeight = privacyContent.scrollHeight + "px";
+      }
+    });
+  }
 });
