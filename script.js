@@ -3,6 +3,16 @@ document.addEventListener('DOMContentLoaded', function () {
   var links = document.getElementById('navLinks');
   var navbar = document.getElementById('navbar');
 
+  // Google Analytics Event Tracking Helper
+  function trackEvent(action, label) {
+    if (typeof gtag === 'function') {
+      gtag('event', action, {
+        event_category: 'engagement',
+        event_label: label
+      });
+    }
+  }
+
   toggle.addEventListener('click', function () {
     links.classList.toggle('open');
     toggle.classList.toggle('active');
@@ -59,6 +69,11 @@ document.addEventListener('DOMContentLoaded', function () {
     entries.forEach(function (entry) {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
+
+        var sectionId = entry.target.getAttribute('id');
+        if (sectionId) {
+          trackEvent('section_view', sectionId);
+        }
       }
     });
   }, observerOptions);
@@ -98,4 +113,25 @@ document.addEventListener('DOMContentLoaded', function () {
   sectionTitles.forEach(function (el) {
     observer.observe(el);
   });
+
+  var viewBtn = document.getElementById('viewExperienceBtn');
+  if (viewBtn) {
+    viewBtn.addEventListener('click', function () {
+      trackEvent('click', 'view_experience_button');
+    });
+  }
+
+  var contactBtn = document.getElementById('contactBtn');
+  if (contactBtn) {
+    contactBtn.addEventListener('click', function () {
+      trackEvent('click', 'contact_button');
+    });
+  }
+
+  var linkedinLink = document.getElementById('linkedinLink');
+  if (linkedinLink) {
+    linkedinLink.addEventListener('click', function () {
+      trackEvent('click', 'linkedin_profile');
+    });
+  }
 });
